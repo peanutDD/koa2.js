@@ -104,9 +104,6 @@
     _options.success = UtilType.isFunction(options.success) ? options.success : function () {}
     _options.fail = UtilType.isFunction(options.fail) ? options.fail : function () {}
     _options.progress = UtilType.isFunction(options.progress) ? options.progress : function () {}
-
     uploadEvent(_options)
   }
-
-
 })()
