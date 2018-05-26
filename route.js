@@ -1,0 +1,66 @@
+/*
+ * @Author: Goodvv
+ * @Date: 2018-05-19 23:23:17
+ * @LastEditors: Goodvv
+ * @LastEditTime: 2018-05-19 23:39:59
+ * @Description: 
+ */
+
+/* jshint esversion: 6 */
+
+
+const Koa = require('koa');
+const fs = require('fs');
+
+const app = new Koa();
+
+function render(page) {
+    return new Promise((resolve, reject) => {
+        let viewUrl = `./view/${page}`;
+        fs.readFile(viewUrl, "binary", (err, data) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+
+/**
+ *
+ *@param {string} {url} {koa2上下文的url，ctx.url}
+ *@return {String} 获取HTML文件内容
+ */
+
+async function route(url) {
+    let view = '404.html';
+    switch (url) {
+        case '/':
+            view = 'index.html';
+            break;
+        case '/index':
+            view = 'index.html'
+            break;
+        case '/todo':
+            view = 'todo.html'
+            break;
+        case '/404':
+            view = '404.html'
+            break;
+        default:
+            break;
+    }
+    let html = await render(view);
+    return html;
+}
+
+app.use(async (ctx) => {
+    let url = ctx.request.url;
+    let html = await route(url);
+    ctx.body = html;
+})
+
+app.listen(8080)
+console.log('[demo] route-simple is starting at port 8080')
