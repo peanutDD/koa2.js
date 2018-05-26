@@ -22,9 +22,9 @@ app.use(views(path.join(__dirname, './view'), {
 const staticPath = './static';
 // 由于koa-static目前不支持koa2
 // 所以只能用koa-convert封装一下
-app.use(convert(static(
-    path.join(__dirname, staticPath)
-)))
+// app.use(convert(static(
+//     path.join(__dirname, staticPath)
+// )))
 
 /*=====      End of 使用第三方中间件      ======*/
 
