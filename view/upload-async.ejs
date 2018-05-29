@@ -9,28 +9,50 @@
     <%= title %>
   </title>
   <style type="text/css">
-    .btn {
-      width: 100px;
+    button {
+      padding: 0;
+    }
+    :focus{
+      outline: 0;
+    }
+    p {
+      width: 100%;
       height: 40px;
+      line-height: 40px;
+      color: #fff;
+      text-align: center;
+      font-size: 1rem;/* 16/16 */
+      background: rgba(224, 14, 14, 0.877);
+      border-width: 0;
+    }
+
+    .btn {
+      display: block;
+      margin: 0 auto;
+      width: 10%;
+      height: 40px;
+      color: #fff;
+      font-size: 1rem;/* 16/16 */
+      background: rgba(224, 14, 14, 0.877);
+      border-width: 0;
     }
 
     .preview-picture {
+      margin: 0 auto;
       width: 300px;
       min-height: 300px;
-      border: 1px #f0f0f0 solid
+      border: 1px #a80ecf9f solid
     }
   </style>
 </head>
 
 <body>
   <button class="btn" id="J_UploadPictureBtn">上传图片</button>
-  <hr/>
   <p>上传进度
     <span id="J_UploadProgress">0</span>%</p>
   <p>上传结果图片</p>
-  <div id="J_PicturePreview" class="preview-picture">
-  </div>
-  <script src="/static/js/upload-async-index.js"></script>
+  <div id="J_PicturePreview" class="preview-picture"></div>
+  <script src="../static/js/upload-async-index.js"></script>
 </body>
 
 </html>

@@ -1,22 +1,24 @@
+/* jshint esversion: 6 */
+
 (function () {
-  let btn = document.getElementById('J_UploadPictureBtn')
-  let progressElem = document.getElementById('J_UploadProgress')
-  let previewElem = document.getElementById('J_PicturePreview')
+  let btn = document.getElementById('J_UploadPictureBtn');
+  let progressElem = document.getElementById('J_UploadProgress');
+  let previewElem = document.getElementById('J_PicturePreview');
   btn.addEventListener('click', function () {
     uploadAction({
       success: function (result) {
-        console.log(result)
+        console.log(result);
         if (result && result.success && result.data && result.data.pictureUrl) {
-          previewElem.innerHTML = '<img src="' + result.data.pictureUrl + '" style="max-width: 100%">'
+          previewElem.innerHTML = '<img src="' + result.data.pictureUrl + '" style="max-width: 100%">';
         }
       },
       progress: function (data) {
         if (data && data * 1 > 0) {
-          progressElem.innerText = data
+          progressElem.innerText = data;
         }
       }
-    })
-  })
+    });
+  });
 
 
   /**
@@ -43,25 +45,25 @@
    */
   function requestEvent(options) {
     try {
-      let formData = options.formData
-      let xhr = new XMLHttpRequest()
+      let formData = options.formData;
+      let xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function () {
 
         if (xhr.readyState === 4 && xhr.status === 200) {
-          options.success(JSON.parse(xhr.responseText))
+          options.success(JSON.parse(xhr.responseText));
         }
       }
 
       xhr.upload.onprogress = function (evt) {
-        let loaded = evt.loaded
-        let tot = evt.total
-        let per = Math.floor(100 * loaded / tot)
-        options.progress(per)
+        let loaded = evt.loaded;
+        let tot = evt.total;
+        let per = Math.floor(100 * loaded / tot);
+        options.progress(per);
       }
-      xhr.open('post', '/api/picture/upload.json')
-      xhr.send(formData)
+      xhr.open('post', '/api/picture/upload.json');
+      xhr.send(formData);
     } catch (err) {
-      options.fail(err)
+      options.fail(err);
     }
   }
 
@@ -70,24 +72,24 @@
    * @param  {object} options 上传参数
    */
   function uploadEvent(options) {
-    let file
-    let formData = new FormData()
-    let input = document.createElement('input')
-    input.setAttribute('type', 'file')
-    input.setAttribute('name', 'files')
+    let file;
+    let formData = new FormData();
+    let input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('name', 'files');
 
-    input.click()
+    input.click();
     input.onchange = function () {
-      file = input.files[0]
-      formData.append('files', file)
+      file = input.files[0];
+      formData.append('files', file);
 
       requestEvent({
         formData,
         success: options.success,
         fail: options.fail,
         progress: options.progress
-      })
-    }
+      });
+    };
 
   }
 
@@ -97,13 +99,13 @@
    */
   function uploadAction(options) {
     if (!UtilType.isJSON(options)) {
-      console.log('upload options is null')
-      return
+      console.log('upload options is null');
+      return;
     }
-    let _options = {}
-    _options.success = UtilType.isFunction(options.success) ? options.success : function () {}
-    _options.fail = UtilType.isFunction(options.fail) ? options.fail : function () {}
-    _options.progress = UtilType.isFunction(options.progress) ? options.progress : function () {}
-    uploadEvent(_options)
+    let _options = {};
+    _options.success = UtilType.isFunction(options.success) ? options.success : function () {};
+    _options.fail = UtilType.isFunction(options.fail) ? options.fail : function () {};
+    _options.progress = UtilType.isFunction(options.progress) ? options.progress : function () {};
+    uploadEvent(_options);
   }
-})()
+})();

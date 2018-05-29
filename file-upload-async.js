@@ -1,10 +1,10 @@
 /* jshint esversion: 6 */
 
-const inspect = require('util').inspect
-const path = require('path')
-const os = require('os')
-const fs = require('fs')
-const Busboy = require('busboy')
+const inspect = require('util').inspect;
+const path = require('path');
+const os = require('os');
+const fs = require('fs');
+const Busboy = require('busboy');
 
 /**
  * 同步创建文件目录
@@ -29,8 +29,8 @@ function mkdirsSync( dirname ) {
  * @return {string}          文件后缀名
  */
 function getSuffixName( fileName ) {
-  let nameList = fileName.split('.')
-  return nameList[nameList.length - 1]
+  let nameList = fileName.split('.');
+  return nameList[nameList.length - 1];
 }
 
 /**
@@ -41,17 +41,17 @@ function getSuffixName( fileName ) {
  */
 
 function uploadFile( ctx, options) {
-  let req = ctx.req
-  let res = ctx.res
-  let busboy = new Busboy({headers: req.headers})
+  let req = ctx.req;
+  let res = ctx.res;
+  let busboy = new Busboy({headers: req.headers});
 
   // 获取类型
-  let fileType = options.fileType || 'common'
-  let filePath = path.join( options.path,  fileType)
-  let mkdirResult = mkdirsSync( filePath )
+  let fileType = options.fileType || 'common';
+  let filePath = path.join( options.path,  fileType);
+  let mkdirResult = mkdirsSync( filePath );
 
   return new Promise((resolve, reject) => {
-    console.log('文件上传中...')
+    console.log('文件上传中...');
     let result = {
       success: false,
       message: '',
@@ -69,30 +69,30 @@ function uploadFile( ctx, options) {
 
       // 文件写入事件结束
       file.on('end', function() {
-        result.success = true
-        result.message = '文件上传成功'
+        result.success = true;
+        result.message = '文件上传成功';
         result.data = {
           pictureUrl: `//${ctx.host}/image/${fileType}/${fileName}`
-        }
-        console.log('文件上传成功！')
-        resolve(result)
-      })
-    })
+        };
+        console.log('文件上传成功！');
+        resolve(result);
+      });
+    });
 
     // 解析结束事件
     busboy.on('finish', function( ) {
-      console.log('文件上结束')
-      resolve(result)
-    })
+      console.log('文件上结束');
+      resolve(result);
+    });
 
     // 解析错误事件
     busboy.on('error', function(err) {
-      console.log('文件上出错')
-      reject(result)
-    })
+      console.log('文件上出错');
+      reject(result);
+    });
 
-    req.pipe(busboy)
-  })
+    req.pipe(busboy);
+  });
 
 }
 
