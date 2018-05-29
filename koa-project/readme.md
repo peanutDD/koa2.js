@@ -12,8 +12,12 @@
 
 ![routers](routers.png)
 
+### 文件目录
+
+![static](static.png)
+
 - [koa-project](#koa-project)
   - [分层设计](#)
     - [后端代码目录](#)
       - [路由目录](#)
-
+    - [文件目录](#)
