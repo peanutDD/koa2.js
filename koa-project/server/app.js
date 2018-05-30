@@ -10,8 +10,8 @@ const koaLogger = require('koa-logger')
 const session = require('koa-session-minimal')
 const MysqlStore = require('koa-mysql-session')
 
-const config = require('./../config')
-const routers = require('./routers/index')
+const config = require('./../config');
+const routers = require('./routers/index');
 
 const app = new Koa()
 

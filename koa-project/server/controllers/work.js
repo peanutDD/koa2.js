@@ -1,5 +1,4 @@
 module.exports = {
-
   async indexPage ( ctx ) {
     // 判断是否有session
     if ( ctx.session && ctx.session.isLogin && ctx.session.userName ) {

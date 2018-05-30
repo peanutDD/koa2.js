@@ -1,8 +1,8 @@
 /* jshint esversion: 6 */
 
-const allConfig = require("./../../config")
-const config = allConfig.database
-const mysql = require("mysql")
+const allConfig = require("./../../config");
+const config = allConfig.database;
+const mysql = require("mysql");
 
 const pool = mysql.createPool({
   host     :  config.HOST,
@@ -16,16 +16,16 @@ let query = function( sql, values ) {
   return new Promise(( resolve, reject ) => {
     pool.getConnection(function(err, connection) {
       if (err) {
-        resolve( err )
+        resolve( err );
       } else {
         connection.query(sql, values, ( err, rows) => {
 
           if ( err ) {
-            reject( err )
+            reject( err );
           } else {
-            resolve( rows )
+            resolve( rows );
           }
-          connection.release()
+          connection.release();
         })
       }
     })

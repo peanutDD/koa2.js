@@ -2,6 +2,9 @@
  * 整合所有子路由
  */
 
+/* jshint esversion: 6 */
+
+
 const router = require('koa-router')()
 
 const home = require('./home')
@@ -16,4 +19,4 @@ router.use('/admin', admin.routes(), admin.allowedMethods())
 router.use('/work', work.routes(), work.allowedMethods())
 router.use('/error', error.routes(), error.allowedMethods())
 
-module.exports = router
+module.exports = router;
