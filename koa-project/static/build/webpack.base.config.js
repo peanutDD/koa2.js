@@ -1,4 +1,3 @@
-
 /* jshint esversion: 6 */
 
 const webpack = require('webpack');
@@ -9,10 +8,10 @@ const outputPath = path.join(__dirname, './../output/dist');
 
 module.exports = {
   entry: {
-    'admin' : './static/src/pages/admin.js',
-    'work' : './static/src/pages/work.js',
-    'index' : './static/src/pages/index.js',
-    'error' : './static/src/pages/error.js',
+    'admin': './static/src/pages/admin.js',
+    'work': './static/src/pages/work.js',
+    'index': './static/src/pages/index.js',
+    'error': './static/src/pages/error.js',
     vendor: ['react', 'react-dom', 'whatwg-fetch']
   },
   output: {
@@ -26,15 +25,13 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use:[
-          {
-            loader: 'babel-loader',
-            query: {
-              // presets: ['es2015', 'react'],
-              cacheDirectory: true
-            }
+        use: [{
+          loader: 'babel-loader',
+          query: {
+            // presets: ['es2015', 'react'],
+            cacheDirectory: true
           }
-        ]
+        }]
       },
       {
         test: /\.css$/,
@@ -69,11 +66,31 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('css/[name].css'),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor'],
-      minChunks: Infinity,
-      filename: 'js/[name].js'
-    })
-  ]
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   names: ['vendor'],
+    //   minChunks: Infinity,
+    //   filename: 'js/[name].js'
+    // })
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: "vendor",
+          chunks: "initial",
+          minChunks: 2,
+          filename: "js/[name].js",
+          minSize: 0
+        },
+        vendor: {
+          test: /node_modules/,
+          chunks: 'initial',
+          name: 'vendor',
+          priority: 10,
+          enforce: true
+        }
+      },
+      runtimeChunk: true
+    }
+  }
 };
-
